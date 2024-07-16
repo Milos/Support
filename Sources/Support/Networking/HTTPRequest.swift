@@ -12,7 +12,7 @@ public struct HTTPRequest: Equatable {
     public let path: String
     public let body: Body?
     public let fragment: String?
-    public let queryParameters: [String: String]
+    public let queryParameters: [URLQueryItem]
     public let headers: HTTPHeaders
     
     /// Creates an HTTP request.
@@ -34,7 +34,7 @@ public struct HTTPRequest: Equatable {
         path: String,
         body: Body?,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) {
         guard path.isEmpty || path.starts(with: "/") else {
@@ -87,7 +87,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -112,7 +112,7 @@ extension HTTPRequest {
             path: path,
             body: body,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -137,7 +137,7 @@ extension HTTPRequest {
             path: path,
             body: body,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -162,7 +162,7 @@ extension HTTPRequest {
             path: path,
             body: body,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -186,7 +186,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -209,7 +209,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -232,7 +232,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -255,7 +255,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }
@@ -278,7 +278,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters,
+            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
             headers: headers
         )
     }

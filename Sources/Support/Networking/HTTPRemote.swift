@@ -11,7 +11,7 @@ public struct HTTPRemote {
     
     public struct QueryParametersMergePolicy {
         
-        var merge: (_ remoteHeaders: [String: String], _ requestHeaders: [String: String]) throws -> [String: String]
+        var merge: (_ remoteHeaders: [URLQueryItem], _ requestHeaders: [URLQueryItem]) throws -> [URLQueryItem]
         
     }
     
@@ -20,7 +20,7 @@ public struct HTTPRemote {
     public let port: Int?
     public let user: String?
     public let password: String?
-    public let queryParameters: [String: String]
+    public let queryParameters: [URLQueryItem]
     public let headers: HTTPHeaders
     
     /// Determines how headers from an `HTTPRequest` must be processed when creating a `URLRequest`.
@@ -48,7 +48,7 @@ public struct HTTPRemote {
         port: Int? = nil,
         user: String? = nil,
         password: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) {
         
@@ -79,6 +79,7 @@ extension HTTPRemote {
     /// - Throws: An error if `request` overries query parameters already defined in the receiver.
     public func url(for request: HTTPRequest, scheme: URLScheme) throws -> URL {
         let combinedQueryParameters = try queryParametersMergePolicy.merge(queryParameters, request.queryParameters)
+        
         return mutating(URLComponents()) {
             $0.scheme = scheme.canonicalValue
             $0.host = host
@@ -89,7 +90,7 @@ extension HTTPRemote {
             $0.password = password
             if !combinedQueryParameters.isEmpty {
                 $0.queryItems = combinedQueryParameters
-                    .map { URLQueryItem(name: $0.key, value: $0.value) }
+//                    .map { URLQueryItem(name: $0.key, value: $0.value) }
             }
         }.url!
     }
@@ -153,19 +154,23 @@ extension HTTPRemote.QueryParametersMergePolicy {
         case requestOverridesQueryParameters(Set<String>)
     }
     
-    /// A policy that throws an error if a request tries to set a quert parameter already present in the remote, even if they have different cases.
+    /// A policy that throws an error if a request tries to set a query parameter already present in the remote, even if they have different cases.
     public static let disallowOverridesCaseInsensitive = HTTPRemote.QueryParametersMergePolicy { remoteParameters, requestParameters in
-        let overriddenParameters = Set(remoteParameters.keys.map { $0.lowercased() })
-            .intersection(requestParameters.keys.map { $0.lowercased() })
+        
+            let remoteNamesLowercased = Set(remoteParameters.map { $0.name.lowercased() })
+            let requestNamesLowercased = Set(requestParameters.map { $0.name.lowercased() })
+            
+            let overriddenParameters = remoteNamesLowercased.intersection(requestNamesLowercased)
+        
         guard overriddenParameters.isEmpty else {
             throw Errors.requestOverridesQueryParameters(overriddenParameters)
         }
         
-        return Dictionary(uniqueKeysWithValues: [remoteParameters, requestParameters].lazy.flatMap { $0 }.map { $0 })
+        return remoteParameters + requestParameters
     }
     
     /// A custom header policy that accepts a closure to determine the behaviour.
-    public static func custom(merge: @escaping (_ remoteHeaders: [String: String], _ requestHeaders: [String: String]) throws -> [String: String]) -> HTTPRemote.QueryParametersMergePolicy {
+    public static func custom(merge: @escaping (_ remoteHeaders: [URLQueryItem], _ requestHeaders: [URLQueryItem]) throws -> [URLQueryItem]) -> HTTPRemote.QueryParametersMergePolicy {
         HTTPRemote.QueryParametersMergePolicy(merge: merge)
     }
     

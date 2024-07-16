@@ -61,7 +61,7 @@ class HTTPRemoteTests: XCTestCase {
             path: "/destination",
             body: nil,
             fragment: "subpage",
-            queryParameters: ["query": "value"],
+            queryParameters: [URLQueryItem(name: "query", value: "value")],
             headers: [HTTPHeaderFieldName("state"): "1234"]
         )
         
@@ -97,7 +97,7 @@ class HTTPRemoteTests: XCTestCase {
             port: 9000,
             user: "user",
             password: "password",
-            queryParameters: ["remote-query": "remote-value"],
+            queryParameters: [URLQueryItem(name: "remote-query", value: "remote-value")],
             headers: [HTTPHeaderFieldName("client_id"): "1"]
         )
         
@@ -159,7 +159,7 @@ class HTTPRemoteTests: XCTestCase {
         let remote = HTTPRemote(
             host: "example.com",
             path: "",
-            queryParameters: ["Query": "true"]
+            queryParameters: [URLQueryItem(name: "Query", value: "true")]
         )
         
         let request = HTTPRequest.get("/path", queryParameters: ["query": "false"])
@@ -171,7 +171,7 @@ class HTTPRemoteTests: XCTestCase {
         var remote = HTTPRemote(
             host: "example.com",
             path: "",
-            queryParameters: ["Query": "true"]
+            queryParameters: [URLQueryItem(name: "Query", value: "true")]
         )
         
         remote.queryParametersMergePolicy = .custom { remoteParameters, _ in remoteParameters }
