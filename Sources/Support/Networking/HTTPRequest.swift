@@ -79,7 +79,7 @@ extension HTTPRequest {
     public static func get(
         _ path: String,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -87,7 +87,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -104,7 +104,7 @@ extension HTTPRequest {
         _ path: String,
         body: Body,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -112,7 +112,7 @@ extension HTTPRequest {
             path: path,
             body: body,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -129,7 +129,7 @@ extension HTTPRequest {
         _ path: String,
         body: Body,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -137,7 +137,7 @@ extension HTTPRequest {
             path: path,
             body: body,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -154,7 +154,7 @@ extension HTTPRequest {
         _ path: String,
         body: Body,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -162,7 +162,7 @@ extension HTTPRequest {
             path: path,
             body: body,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -178,7 +178,7 @@ extension HTTPRequest {
     public static func delete(
         _ path: String,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -186,7 +186,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -201,7 +201,7 @@ extension HTTPRequest {
     public static func options(
         _ path: String,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -209,7 +209,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -224,7 +224,7 @@ extension HTTPRequest {
     public static func connect(
         _ path: String,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -232,7 +232,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -247,7 +247,7 @@ extension HTTPRequest {
     public static func head(
         _ path: String,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -255,7 +255,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }
@@ -270,7 +270,7 @@ extension HTTPRequest {
     public static func trace(
         _ path: String,
         fragment: String? = nil,
-        queryParameters: [String: String] = [:],
+        queryParameters: [URLQueryItem] = [],
         headers: HTTPHeaders = HTTPHeaders()
     ) -> HTTPRequest {
         HTTPRequest(
@@ -278,7 +278,7 @@ extension HTTPRequest {
             path: path,
             body: nil,
             fragment: fragment,
-            queryParameters: queryParameters.map { URLQueryItem(name: $0.key, value: $0.value) },
+            queryParameters: queryParameters,
             headers: headers
         )
     }

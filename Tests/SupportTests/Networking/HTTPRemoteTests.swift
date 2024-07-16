@@ -105,7 +105,7 @@ class HTTPRemoteTests: XCTestCase {
             "/destination",
             body: .plain("body"),
             fragment: "subpage",
-            queryParameters: ["query": "value"],
+            queryParameters: [URLQueryItem(name: "query", value: "value")],
             headers: [HTTPHeaderFieldName("state"): "1234"]
         )
         
@@ -162,7 +162,7 @@ class HTTPRemoteTests: XCTestCase {
             queryParameters: [URLQueryItem(name: "Query", value: "true")]
         )
         
-        let request = HTTPRequest.get("/path", queryParameters: ["query": "false"])
+        let request = HTTPRequest.get("/path", queryParameters: [URLQueryItem(name: "query", value: "false")])
         
         XCTAssertThrowsError(try remote.urlRequest(from: request))
     }
@@ -176,7 +176,7 @@ class HTTPRemoteTests: XCTestCase {
         
         remote.queryParametersMergePolicy = .custom { remoteParameters, _ in remoteParameters }
         
-        let request = HTTPRequest.get("/path", queryParameters: ["query": "false"])
+        let request = HTTPRequest.get("/path", queryParameters: [URLQueryItem(name: "query", value: "false")])
         
         let urlRequest = try remote.urlRequest(from: request)
         TS.assert(urlRequest.url?.query, equals: "Query=true")
